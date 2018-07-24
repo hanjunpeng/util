@@ -16,3 +16,35 @@
                 + seperator2 + date.getSeconds();
         return currentdate;
     },
+//文字无线滚动
+    <style lang="">
+        #box {width: 300px;overflow: hidden;}
+        #inner {width: 1000px;overflow: hidden;}
+        p { display: inline-block;}
+    </style>
+    <div id="box">
+    <div id="inner">
+      <p>文字如果超出了宽度自动向左滚动文字如果超出了宽度自动向左滚动。</p>
+    </div>
+    </div>
+    var box = document.getElementById('box');
+    var inner = document.getElementById('inner');
+    var p = inner.getElementsByTagName('p')[0];
+    var p_w = p.offsetWidth;  
+    window.onload = function () {
+    if (box.offsetWidth > p.offsetWidth) { return false }
+    inner.innerHTML += inner.innerHTML;
+    setInterval("fun2()", 1000);
+    }
+    function fun2() {
+    if (p_w > box.scrollLeft) {
+      box.scrollLeft++;
+      setTimeout("fun2()", 30)
+    } else {
+      setTimeout("fun1()", 200);
+    }
+    };
+    function fun1() {
+    box.scrollLeft = 0;
+    fun2();
+    }
