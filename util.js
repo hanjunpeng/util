@@ -89,4 +89,14 @@ iframeId.onload = function(){
   // window.frames[0].postMessage(__detailPreviewObj,"*");
 }
  
+/*
+*深度复制
+*/
+var array = [1,2,3,4,5]; 
+var array1 = array; 
+array[0] = 'hhhh'; 
+console.log(array); //直接赋值 指针引用还是原来那个 导致两个都会变
+解决办法：var array = [1,2,3,4,5]; var array1 = JSON.parse(JSON.stringify(array)); array[0] = 'hhhh'; console.log(array);
+解决办法：var array = [1,2,3,4,5]; var array1 = array.map(resp=>{return resp}); array[0] = 'hhhh'; console.log(array);
+
    
