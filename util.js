@@ -99,4 +99,39 @@ console.log(array); //直接赋值 指针引用还是原来那个 导致两个�
 解决办法：var array = [1,2,3,4,5]; var array1 = JSON.parse(JSON.stringify(array)); array[0] = 'hhhh'; console.log(array);
 解决办法：var array = [1,2,3,4,5]; var array1 = array.map(resp=>{return resp}); array[0] = 'hhhh'; console.log(array);
 
-   
+/*
+* 列表上下移动 效果
+*/
+   列表是一个数组，使用splice（当前项索引,2,下一向或者上一项,当前项）
+
+/*
+* 倒计时
+*/
+1：如果后台给时间戳  就不用在转化 
+    this.showTime = ["00","00","00","00"]
+    this.leftTime = this.list.countdown_nopay_order_cancel;//待付款
+    this.timer = setInterval(()=>{
+        this.leftTime = this.showCountDown(this.leftTime);
+        this.leftTime = this.leftTime - 1;
+    })
+    //更新时间
+    showCountDown(leftTimeNow){
+      if(leftTimeNow<=0){
+        return ["0","0","0","0"]
+      };
+       var days = parseInt(leftTimeNow / 60 / 60 / 24 , 10); //计算剩余的天数 
+      var hours = parseInt(leftTimeNow / 60 / 60 % 24 , 10); //计算剩余的小时 
+      var minutes = parseInt(leftTimeNow / 60 % 60, 10);//计算剩余的分钟 
+      var seconds = parseInt(leftTimeNow % 60, 10);//计算剩余的秒数 
+      days = this.checkTime(days); 
+      hours = this.checkTime(hours); 
+      minutes = this.checkTime(minutes); 
+      seconds = this.checkTime(seconds);
+      // leftTimeNow=leftTimeNow-1000;
+      return [days,hours,minutes,seconds]
+    }
+    2:如果不是时间戳 需要转化为时间戳在进行计算
+    this.leftTime=( (new Date(this.list.so_createTime)).getTime() + (30*60*1000)  - (new Date(this.list.now)).getTime() ) 30分钟
+    this.leftTime=( (new Date(this.list.so_payTime)).getTime() + (72*60*60*1000) - (new Date(this.list.now)).getTime() ) 72小时
+    
+    
