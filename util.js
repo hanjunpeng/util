@@ -19,7 +19,8 @@ getNowFormatDate() {
             + seperator2 + date.getSeconds();
     return currentdate;
 },
-
+    
+<!-----------------------------------------优美的下划线------------------------------------------------------->
 /*
 *文字无线滚动
 */
@@ -55,6 +56,7 @@ function fun1() {
   fun2();
 }
 
+<!-----------------------------------------优美的下划线------------------------------------------------------->
 /*
 *postMessage 代替ifame
 */
@@ -88,6 +90,13 @@ iframeId.onload = function(){
   iframeId.contentWindow.postMessage(__detailPreviewObj,'*');
   // window.frames[0].postMessage(__detailPreviewObj,"*");
 }
+
+接收方：const that=this;
+       window.addEventListener('message', function(ev) {
+        var data = ev.data;
+        that.initData(data)
+       }, false);
+<!-----------------------------------------优美的下划线------------------------------------------------------->
  
 /*
 *深度复制
@@ -98,12 +107,14 @@ array[0] = 'hhhh';
 console.log(array); //直接赋值 指针引用还是原来那个 导致两个都会变
 解决办法：var array = [1,2,3,4,5]; var array1 = JSON.parse(JSON.stringify(array)); array[0] = 'hhhh'; console.log(array);
 解决办法：var array = [1,2,3,4,5]; var array1 = array.map(resp=>{return resp}); array[0] = 'hhhh'; console.log(array);
+<!-----------------------------------------优美的下划线------------------------------------------------------->
 
 /*
 * 列表上下移动 效果
 */
    列表是一个数组，使用splice（当前项索引,2,下一向或者上一项,当前项）
 
+<!-----------------------------------------优美的下划线------------------------------------------------------->
 /*
 * 倒计时
 */
@@ -133,5 +144,43 @@ console.log(array); //直接赋值 指针引用还是原来那个 导致两个�
     2:如果不是时间戳 需要转化为时间戳在进行计算
     this.leftTime=( (new Date(this.list.so_createTime)).getTime() + (30*60*1000)  - (new Date(this.list.now)).getTime() ) 30分钟
     this.leftTime=( (new Date(this.list.so_payTime)).getTime() + (72*60*60*1000) - (new Date(this.list.now)).getTime() ) 72小时
+    
+    <!-----------------------------------------优美的下划线------------------------------------------------------->
+    /*
+    *使用axios如何取消重复请求
+    */
+    vue项目里：
+    处理axios的请求 http.js 文件中
+    let pending = []; //声明一个数组用于存储每个ajax请求的取消函数和ajax标识
+    let cancelToken = axios.CancelToken;
+    let removePending = (config) => {
+        for(let p in pending){
+            if(pending[p].u === config.url + '&' + config.method) { //当当前请求在数组中存在时执行函数体
+                pending[p].f(); //执行取消操作
+                pending.splice(p, 1); //把这条记录从数组中移除
+            }
+        }
+    }
+    
+    axios.interceptors.request.use(
+        config=>{
+            removePending(config); //在一个ajax发送前执行一下取消操作
+            config.cancelToken = new cancelToken((c)=>{
+               // 这里的ajax标识我是用请求地址&请求方式拼接的字符串，当然你可以选择其他的一些方式
+               pending.push({ u: config.url + '&' + config.method, f: c });  
+           });
+        }
+    )
+
+    axios.interceptors.response.use(
+        response=>{
+            removePending(response.config);  
+        }
+    )
+    参考案例地址：https://www.jianshu.com/p/4445595488e2
+<!-----------------------------------------优美的下划线------------------------------------------------------->
+
+    
+
     
     
