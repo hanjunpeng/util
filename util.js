@@ -186,9 +186,17 @@ console.log(array); //直接赋值 指针引用还是原来那个 导致两个�
         new vconsole(); //url里面有debug参数进入调试模式
     } 
     <!-----------------------------------------优美的下划线------------------------------------------------------->
+
     在ui-组件库中，很多使用了锚点#, 
     <div class="anchor"><h2 id="变量覆盖">变量覆盖</h2><a href="#变量覆盖"></h2>#</div>
     a 链接的#后的和id=“”一样就行了，只要加id=“”就可以了，很方便。
     页面间跳转用锚点直接能确定到那个位置，
     <a href="http://www.baidu.com#变量覆盖"> 那个页面要有id=“变量覆盖”
+
+    <!-----------------------------------------优美的下划线------------------------------------------------------->
+    移动端rem适配，在写商城时候rem在曲面屏手机里样式错乱，参考文档：https://www.jianshu.com/p/8300a5ec6480
+    添加js：
+        <script type="text/javascript">
+        !function(e){var t={};t.resizeEvt="orientationchange"in window?"orientationchange":"resize",t.Html=e.getElementsByTagName("html")[0],t.widthProportion=function(){var n=Number((e.body&&e.body.clientWidth||t.Html.offsetWidth)/10);return n>76.8?76.8:n<32?32:n},t.changePage=function(){t.Html.setAttribute("style","font-size:"+t.widthProportion()+"px"),t.correctPx()},t.correctPx=function(){var e=document.documentElement,n=e.clientWidth;if(n&&!(n>768)){var i=document.createElement("div");i.style.width="10rem",i.style.height="0",t.Html.appendChild(i);var o=n,d=i.clientWidth/o;1!==d&&(e.style.fontSize=n/10/d+"px"),t.Html.removeChild(i)}},t.changePage(),document.addEventListener&&(window.addEventListener(t.resizeEvt,t.changePage,!1),document.addEventListener("DOMContentLoaded",t.changePage,!1))}(document);
+        </script>
     
