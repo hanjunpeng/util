@@ -179,7 +179,12 @@ console.log(array); //直接赋值 指针引用还是原来那个 导致两个�
     )
     参考案例地址：https://www.jianshu.com/p/4445595488e2
 <!-----------------------------------------优美的下划线------------------------------------------------------->
-
+    app调试 用vconsole 插件
+    <loading v-if="!hideLoading" :show="$store.state.loading.isShow"></loading>
+    if(window.location.search.match("debug=true")){
+        this.hideLoading=true;
+        new vconsole(); //url里面有debug参数进入调试模式
+    } 
     
 
     
