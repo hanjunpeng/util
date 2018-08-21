@@ -249,5 +249,161 @@ console.log(array); //直接赋值 指针引用还是原来那个 导致两个�
 
     <!-----------------------------------------优美的下划线------------------------------------------------------->
     
-    
-    
+    公共弹框
+    <!-- 弹框 -->
+    <section class="wrap-dialog" id="dialog">
+        <div class="dialog-box">
+            <div class="title">提示</div>
+            <p>{$cellphone}</p>
+            <div class="dialog-foot">
+                <span id="sureBtn">确定</span>
+                <span id="cancelBtn">取消</span>
+            </div>
+        </div>
+    </section>
+    /* 弹框 */
+    #dialog{
+        display:none;
+    }
+    .wrap-dialog{
+        width:100%;
+        height: 100%;
+        background:rgba(0,0,0,0.2);
+        z-index: 2;
+        position:fixed;
+        top:0;
+        left:0;
+    }
+    .wrap-dialog .dialog-box{
+        position: absolute;
+        top:50%;
+        left:50%;
+        margin-top:-58.5px;
+        margin-left:-119px;
+        width:238px;
+        height:117px;
+        background: #ffffff;
+        color:#666666;
+        box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.2);
+        border-radius: 8px;
+        border:1px solid rgba(235, 235, 235, 1);
+        z-index: 3;
+        text-align:center;
+        /* position:relative; */
+    }
+    .dialog-box .title{
+        margin-top:17px;
+        font-size:16px;
+        color:#000;
+    }
+    .dialog-box p{
+        font-size:14px;
+        margin-top:10px;
+        color:#333333bf;
+    }
+    .dialog-box .dialog-foot{
+        width:100%;
+        height:40px;
+        position:absolute;
+        bottom:0;
+        display:flex;
+        font-size:14px;
+        border-top:1px solid #eee;
+        background:#eeeeee54;
+    }
+    .dialog-foot span{
+        flex:1;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+    }
+    .dialog-foot span:nth-child(1){
+        border-right:1px solid #eee;
+    }
+    .dialog-foot span:nth-child(1) a{
+        color:#666666
+    }
+    <!-- android打电话弹框 -->
+    <section class="wrap-phone" id="wrapPhone">
+        <div class="phone-box">
+            <p>{$cellphone}</p>
+            <div class="phone-foot">
+                <span id="phoneCancel">取消</span>
+                <span id="phoneSure">呼叫</span>
+            </div>
+        </div>
+    </section>
+    /* android电话弹框 */
+    #wrapPhone{
+        display:none
+    }
+    .wrap-phone{
+        width:100%;
+        height: 100%;
+        background:rgba(0,0,0,0.4);
+        z-index: 4;
+        position:fixed;
+        top:0;
+        left:0;
+    }
+    .wrap-phone .phone-box{
+        position: absolute;
+        top:50%;
+        left:50%;
+        margin-top:-58.5px;
+        margin-left:-119px;
+        width:238px;
+        height:95px;
+        background: #ffffff;
+        color:#666666;
+        box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.2);
+        border-radius: 8px;
+        border:1px solid rgba(235, 235, 235, 1);
+        z-index: 5;
+        text-align:center;
+    }
+    .phone-box p{
+        margin-top:21px;
+        color:#000;
+        font-size:16px;
+    }
+    .phone-box .phone-foot{
+        width:100%;
+        height:34px;
+        position:absolute;
+        bottom:0;
+        display:flex;
+        font-size:16px;
+        border-top:1px solid #eee;
+    }
+    .phone-box span{
+        flex:1;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        color:#0659d6;
+    }
+    .phone-box span:nth-child(1){
+        border-right:1px solid #eee;
+    }
+    //点击显示弹框 CustomJS.dail（）调用客户端方法  {$cellphone} 是php的方法获取字段
+    sureBtn.onclick=function(){
+        var phone = {$cellphone}+'';
+        var u = navigator.userAgent;
+        var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1; //android终端
+        dialog.style.display = "none";
+        if (typeof CustomJS != 'undefined'){
+            if (isAndroid){
+                wrapPhone.style.display = 'block';   
+                phoneSure.onclick=function(){
+                    CustomJS.dail(phone)
+                }
+                phoneCancel.onclick=function(){
+                    wrapPhone.style.display = 'none';
+                    dialog.style.display = "none";
+                }
+            }else{
+                location.href="tel:" + phone;
+            }
+        }
+    }
