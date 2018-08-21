@@ -19,7 +19,53 @@ getNowFormatDate() {
             + seperator2 + date.getSeconds();
     return currentdate;
 },
-    
+<!-----------------------------------------优美的下划线------------------------------------------------------->
+/*
+*封装ajax
+*/
+ function ajax(options) {
+      var xhr = null;
+      var params = formsParams(options.data);
+      //创建对象
+      if (window.XMLHttpRequest) {
+        xhr = new XMLHttpRequest()
+      } else {
+        xhr = new ActiveXObject("Microsoft.XMLHTTP");
+      }
+      // 连接
+      if (options.type == "GET") {
+        xhr.open(options.type, options.url + "?" + params, options.async);
+        xhr.send(null)
+      } else if (options.type == "POST") {
+        xhr.open(options.type, options.url, options.async);
+        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        xhr.send(params);
+      }
+      xhr.onreadystatechange = function () {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+          options.success(xhr.responseText);
+        }
+      }
+      function formsParams(data) {
+        var arr = [];
+        for (var prop in data) {
+          arr.push(prop + "=" + data[prop]);
+        }
+        return arr.join("&");
+      }
+    }
+    ajax({
+          url:'',
+          type:'POST',
+          async:true,
+          data:{
+            name:'h',
+            age:18
+          },
+          success:function(data){
+            console.log(data)
+          }
+        })
 <!-----------------------------------------优美的下划线------------------------------------------------------->
 /*
 *文字无线滚动
@@ -194,9 +240,14 @@ console.log(array); //直接赋值 指针引用还是原来那个 导致两个�
     <a href="http://www.baidu.com#变量覆盖"> 那个页面要有id=“变量覆盖”
 
     <!-----------------------------------------优美的下划线------------------------------------------------------->
+
     移动端rem适配，在写商城时候rem在曲面屏手机里样式错乱，参考文档：https://www.jianshu.com/p/8300a5ec6480
     添加js：
         <script type="text/javascript">
         !function(e){var t={};t.resizeEvt="orientationchange"in window?"orientationchange":"resize",t.Html=e.getElementsByTagName("html")[0],t.widthProportion=function(){var n=Number((e.body&&e.body.clientWidth||t.Html.offsetWidth)/10);return n>76.8?76.8:n<32?32:n},t.changePage=function(){t.Html.setAttribute("style","font-size:"+t.widthProportion()+"px"),t.correctPx()},t.correctPx=function(){var e=document.documentElement,n=e.clientWidth;if(n&&!(n>768)){var i=document.createElement("div");i.style.width="10rem",i.style.height="0",t.Html.appendChild(i);var o=n,d=i.clientWidth/o;1!==d&&(e.style.fontSize=n/10/d+"px"),t.Html.removeChild(i)}},t.changePage(),document.addEventListener&&(window.addEventListener(t.resizeEvt,t.changePage,!1),document.addEventListener("DOMContentLoaded",t.changePage,!1))}(document);
         </script>
+
+    <!-----------------------------------------优美的下划线------------------------------------------------------->
+    
+    
     
