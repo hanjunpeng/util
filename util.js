@@ -20,6 +20,53 @@ getNowFormatDate() {
     return currentdate;
 },
 <!-----------------------------------------优美的下划线------------------------------------------------------->
+
+/*
+* 获取每年多少天，以过去多少天，所占百分比
+*/
+    var box = document.getElementById('box');
+   //获取每年是否是瑞年或者平年
+    function isLeapYear(){
+        var leapyear = getYear();
+        if(leapyear%400 === 0){
+            return true
+        }else if(leapyear%4===0 && leapyear%100!==0){
+            return true
+        }else{
+            return false
+        }
+    };
+    //获取每年总共多少天
+    function getDayOfYear(){
+        return isLeapYear()?366:365
+    };
+    //获取是哪一年
+    function getYear(){
+        return new Date().getFullYear()
+    };
+    //获取已过去多少天
+    function getDays(){
+        var start = new Date();
+        start.setMonth(0);
+        start.setDate(1);
+        // start就是今年的第一天
+        var offset = new Date().getTime() - start.getTime();
+        return parseInt(offset/1000/60/60/24)+1
+    };
+    //获取多少天所占比重
+    function getPercent(){
+        return (getDays()*100/getDayOfYear()).toFixed(1)
+    };
+    //初始化
+    function init(){
+        var year = getYear();
+        var day = getDays();
+        var precent = getPercent();
+        console.log(year+'年,'+'已过去'+day+'天,'+'所占百分比'+precent)
+        box.innerHTML = year+'年,'+'已过去'+day+'天,'+'所占百分比'+precent+'%'
+    }
+    init();
+<!-----------------------------------------优美的下划线------------------------------------------------------->
 /*
 *封装ajax
 */
@@ -407,3 +454,5 @@ console.log(array); //直接赋值 指针引用还是原来那个 导致两个�
             }
         }
     }
+    <!-----------------------------------------优美的下划线------------------------------------------------------->
+    
