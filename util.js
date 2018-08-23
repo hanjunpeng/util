@@ -456,3 +456,40 @@ console.log(array); //直接赋值 指针引用还是原来那个 导致两个�
     }
     <!-----------------------------------------优美的下划线------------------------------------------------------->
     
+    //对数组进行平等分 做分页时候遇到的
+    function handleArraySplice(arr,len){
+        let a_len = arr.length;
+        var result = [];
+        for(var i=0;i<a_len;i+len){
+            result.push(arr.slice(i,i+len))
+        }
+        return result
+    }
+    var arr = [1,2,3,4,5,6,7,8,9,10,11,12]
+    var neeNum = handleArraySplice(arr,5)
+    console.log(neeNum)
+    //声明9位数组 做分页时候遇到的
+    newArrayNiew(num,max){
+        var cur = num;
+        var max = max;
+        var start = cur - 4;
+        var list = [];
+        if(max<9){
+            start = 1;
+            for(var i=0; i<max; i++) {
+                list.push(start)
+                start++
+            }
+        }else{
+            if(cur<5) { //如果小于5
+            start = 1
+            } else if(cur>(max-4)) { //如果大于最大页码-4
+                start = max-8
+            }
+            for(var i=0; i<9; i++) {
+                list.push(start)
+                start++
+            }
+        }
+        return list
+    }
