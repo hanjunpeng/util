@@ -67,6 +67,32 @@ getNowFormatDate() {
     }
     init();
 <!-----------------------------------------优美的下划线------------------------------------------------------->
+
+/*
+* 滚动到顶部
+*/
+    function setScrollTop(height){
+        if(document.documentElement&&document.documentElement.scrollTop){
+        document.documentElement.scrollTop=height;
+        }else if(document.body){
+            document.body.scrollTop=height;
+        }
+    }
+    setScrollTop(0)
+<!-----------------------------------------优美的下划线------------------------------------------------------->
+/*
+* 取窗口滚动条高度 
+*/
+    function getScrollTop(){
+        var scrollTop=0;
+        if(document.documentElement&&document.documentElement.scrollTop){
+        scrollTop=document.documentElement.scrollTop;
+        }else if(document.body){
+            scrollTop=document.body.scrollTop;
+        }
+        return parseFloat(scrollTop);
+    }
+<!-----------------------------------------优美的下划线------------------------------------------------------->
 /*
 *封装ajax
 */
