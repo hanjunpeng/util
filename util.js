@@ -1,5 +1,27 @@
 
 /*
+* 获取当前时间 yyyy-MM-dd HH:MM:SS
+*/
+// Date方法扩展一个方法 使用方法： (new Date).format("yyyy-MM-dd hh:mm:ss")
+Date.prototype.format = function (t) {
+    var n = {
+        "M+": this.getMonth() + 1,
+        "d+": this.getDate(),
+        "h+": this.getHours(),
+        "m+": this.getMinutes(),
+        "s+": this.getSeconds(),
+        "q+": Math.floor((this.getMonth() + 3) / 3),
+        S: this.getMilliseconds()
+    };
+    /(y+)/.test(t) && (t = t.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length)));
+    for (var r in n) {
+        var e = n[r];
+        new RegExp("(" + r + ")").test(t) && (t = t.replace(RegExp.$1, 1 == RegExp.$1.length ? e : ("00" + e).substr(("" + e).length)))
+    }
+    return t
+},
+<!-----------------------------------------优美的下划线------------------------------------------------------->
+/*
 *获取当前时间 yyyy-MM-dd HH:MM:SS
 */
 getNowFormatDate() {
