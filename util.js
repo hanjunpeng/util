@@ -541,3 +541,97 @@ console.log(array); //直接赋值 指针引用还是原来那个 导致两个�
         }
         return list
     }
+    
+    <!-----------------------------------------优美的下划线------------------------------------------------------->
+    
+    详情页点击返回首页位置还是在那个商品位置
+    vue 用的缓存 没有用keep-alive 用的是 vue-navigation  安装 cnpm install vue-navigation --save-dev  解释：--save 是安装到项目依赖 上线也要用 -dev是本地依赖是插件，本地开发使用
+    app.vue 页面：
+                <navigation>
+                   <router-view></router-view>
+                </navigation>
+    main.js import Navigation from 'vue-navigation'
+             Vue.use(Navigation, {router, store})
+    import {
+      scrollTop,
+      setScrollTop,
+      getScrollTop,
+      getScrollview
+    } from "../utils/utils"
+    const homeScrollKey = "scroll_home_";
+    const listScrollKey = "scroll_list_";
+    router.beforeEach((to, from, next) => {
+      if (from.path == "/home") {
+        //从首页离开记录下滚动条位置
+        const $el = document.getElementById("homeView");
+        const _scroll = $el ? getScrollview($el).scrollTop : 0;
+        sessionStorage.setItem(homeScrollKey + from.query.VNK, _scroll)
+      } else if (to.path == "/detail" && from.path == "/list") {
+        //从列表进入详情记录下滚动条位置
+        const _scroll = getScrollTop() || 0;
+        sessionStorage.setItem(listScrollKey + from.query.VNK, _scroll)
+      }
+      if (to.path !== from.path) store.commit('setLoading', true);
+      const _path = to.path.replace("/", '').split("_");
+      store.commit('setMenuActive', _path[0]);
+      //判断是否需要跳转授权页面
+      if ((type === 1 || type === 2) && (_path != "autologin") && !(sessionStorage.getItem("__has_authorized_" + phone + "__"))) {
+        next({
+          path: "/autologin"
+        })
+      }
+      // _vm.$navigation.once('back', (to, from) => {
+      //     store.commit('setLoading', false);
+      // })
+      _vm.$navigation.once('replace', (to, from) => {
+        store.commit('setLoading', false);
+      })
+      //setScrollTop(0); //返回顶部 ，解决路由跳转的时候页面的scrolltop不在顶部的bug
+      next()
+    })
+    router.afterEach((to, from) => {
+
+      //判断是否有标题
+      let _title = to.query.atitle ? to.query.atitle : to.meta.title;
+      _title && _vm.$setTitle(_title);
+      _vm.$navigation.once('back', (to, from) => {
+        store.commit('setLoading', false);
+        //记录还原滚动条位置
+        if (to.route.path == "/home") {
+          setTimeout(() => {
+            let $to = (sessionStorage.getItem(homeScrollKey + to.route.query.VNK))
+            let $el = document.getElementById("homeView");
+            let $view = getScrollview($el);
+            let $from = $el.scrollTop;
+            if ($from == $to) return;
+            scrollTop($view, 0, $to, 0);
+          }, 0)
+
+        } else if (to.route.path == "/list" && from.route.path == "/detail") {
+          setTimeout(() => {
+            let $to = (sessionStorage.getItem(listScrollKey + to.route.query.VNK))
+            let $from = getScrollTop() || 0;
+            if ($from == $to) return;
+            setScrollTop($to)
+          }, 0)
+        }
+
+      })
+    });
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
