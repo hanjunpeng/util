@@ -628,9 +628,43 @@ console.log(array); //直接赋值 指针引用还是原来那个 导致两个�
     console.log(ary1) // [1,2,3]
     var ary = [1,2,3];
     console.log(ary.map(String)) // ["1","2","3"]
-    
-    
-    
+
+     <!-----------------------------------------优美的下划线------------------------------------------------------->
+    # 判断两个数组是否相等
+    var arry1=["1",3,3];
+    var arry2=[1,3,3];
+    var indexon_1;
+    for (var j = 0; j < arry1.length; j++) {
+        indexon_1 = 1;
+        if (arry1[j] !== arry2[j]) {
+            indexon_1 = 0;
+            break;
+        }
+    }
+    if (indexon_1 == 1) {
+        console.log("相等");
+    } else {
+        console.log('不相等')
+    }
+    <!-----------------------------------------优美的下划线------------------------------------------------------->
+   # 判断数组里是否有重复
+    defartAtRepeat(ary) {
+      let flag = true
+      for(let i=0; i<ary.length-1; i++) {
+        for(let j=i+1; j<ary.length; j++) {
+          if(ary[i] === ary[j]) {
+            flag = false
+            break;
+          }
+        }
+      }
+      return flag
+    },
+    let mark = this.defartAtLeast(ary)
+    if(!mark) {
+      this.$message.error('负责部门必填一个')
+      return
+    }
     
     
     
