@@ -248,6 +248,26 @@ array[0] = 'hhhh';
 console.log(array); //直接赋值 指针引用还是原来那个 导致两个都会变
 解决办法：var array = [1,2,3,4,5]; var array1 = JSON.parse(JSON.stringify(array)); array[0] = 'hhhh'; console.log(array);
 解决办法：var array = [1,2,3,4,5]; var array1 = array.map(resp=>{return resp}); array[0] = 'hhhh'; console.log(array);
+网上看的一个方法：
+function deepClone(obj){
+    let objClone = Array.isArray(obj)?[]:{};
+    if(obj && typeof obj==="object"){
+        for(key in obj){
+            if(obj.hasOwnProperty(key)){
+                if(obj[key]&&typeof obj[key] ==="object"){
+                    objClone[key] = deepClone(obj[key]);
+                }else{
+                    objClone[key] = obj[key];
+                }
+            }
+        }
+    }
+    return objClone;
+}
+var ary = [1,2,3,4];
+var ary1 = deepClone(ary);
+ary[0] = 9
+console.log(ary,ary1)
 <!-----------------------------------------优美的下划线------------------------------------------------------->
 
 /*
