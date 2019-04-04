@@ -685,6 +685,43 @@ console.log(ary,ary1)
       this.$message.error('负责部门必填一个')
       return
     }
+    <!-----------------------------------------优美的下划线------------------------------------------------------->
+    js原生代替jq的siblings
+    <ul>
+	    <div id="sibling1">1</div>
+	    <div class="sibling">2</div><div></div>  
+	    <div class="sibling">3</div>
+	    <div class="sibling" id="sibling2"><p>4</p></div>
+	    <div class="sibling">5</div>   
+	    <p>11</p>
+    </ul>
+    class aQuery {
+        constructor(seletor){
+            this.arr = [] ; //保存兄弟节点
+            this.seletor = document.querySelector(seletor);
+        }
+        siblings(){
+            let prev = this.seletor.previousSibling; //o的前一个同胞节点
+            //先往上查询兄弟节点
+            while(prev){
+                if(prev.nodeType == 1&&prev.tagName == this.seletor.tagName){
+                    this.arr.unshift(prev);//数组首部插入数组，保证节点顺序
+                }
+                prev = prev.previousSibling;//把上一节点赋值给prev
+            }
+            //往下查询兄弟节点
+            let next = this.seletor.nextSibling;//o的后一个同胞节点
+            while(next){
+                if(next.nodeType == 1 &&next.tagName == this.seletor.tagName){
+                    this.arr.push(next);//数组尾部插入，保证节点顺序
+                }
+                next = next.nextSibling;//下一节点赋值给next，用于循环
+            }
+
+            return this;
+        }
+    }
+    console.log(new aQuery('#sibling1').siblings().arr)
     
     
     
