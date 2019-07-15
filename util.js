@@ -528,7 +528,7 @@ console.log(ary,ary1)
     function handleArraySplice(arr,len){
         let a_len = arr.length;
         var result = [];
-        for(var i=0;i<a_len;i+len){
+        for(var i=0;i<a_len;i+=len){
             result.push(arr.slice(i,i+len))
         }
         return result
